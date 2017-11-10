@@ -1,0 +1,43 @@
+<?php
+
+namespace Supermarket\entities;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Pantry
+ *
+ * @ORM\Table(name="Pantry", indexes={@ORM\Index(name="fk_Pantry_1_idx", columns={"idProduct"})})
+ * @ORM\Entity
+ */
+class Pantry
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idPantry", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idpantry;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="amount", type="integer", nullable=false)
+     */
+    private $amount;
+
+    /**
+     * @var \Supermarket\entities\Product
+     *
+     * @ORM\ManyToOne(targetEntity="Supermarket\entities\Product")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idProduct", referencedColumnName="idProduct")
+     * })
+     */
+    private $idproduct;
+
+
+}
+

@@ -1,0 +1,57 @@
+<?php
+
+namespace Supermarket\entities;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Supermarket
+ *
+ * @ORM\Table(name="SuperMarket", indexes={@ORM\Index(name="fk_SuperMarket_1_idx", columns={"idFranchise"})})
+ * @ORM\Entity
+ */
+class Supermarket
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idSuperMarket", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idsupermarket;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="province", type="string", length=100, nullable=false)
+     */
+    private $province;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="location", type="string", length=200, nullable=false)
+     */
+    private $location;
+
+    /**
+     * @var \Supermarket\entities\Franchise
+     *
+     * @ORM\ManyToOne(targetEntity="Supermarket\entities\Franchise")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idFranchise", referencedColumnName="idFranchise")
+     * })
+     */
+    private $idfranchise;
+
+
+}
+
