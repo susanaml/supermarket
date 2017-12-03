@@ -1,6 +1,9 @@
 <?php
 // DIC configuration
 
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+
 $container = $app->getContainer();
 
 // view renderer
@@ -19,12 +22,25 @@ $container['logger'] = function ($c) {
 
 // database
 $container['db'] = function ($c) {
-    $settings = $c->get('settings')['db'];
-    $db = new PDO("mysql:host=$settings[host];dbname:$settings[dbname]",
-        $settings['user'], $settings['pass']);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    return $db;
+    // Create a simple "default" Doctrine ORM configuration for Annotations
+    // Create a simple "default" Doctrine ORM configuration for Annotations
+    $isDevMode = true;
+    $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/entities"), $isDevMode, null, null, false);
+
+    // database configuration parameters
+    $conn = array(
+        'driver'   => 'pdo_mysql',
+        'user'     => 'root',
+        'password' => '',
+        'dbname'   => 'supermarket',
+        'host'     => 'localhost',
+        'charset'  => 'UTF8'
+    );
+
+    // obtaining the entity manager
+    $entityManager = EntityManager::create($conn, $config);
+
+    return $entityManager;
 };
 
 
